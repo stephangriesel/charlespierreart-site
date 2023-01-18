@@ -1,33 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import CardContainer from './components/CardContainer';
+import Facebook from './assets/icons/Facebook';
+import Instagram from './assets/icons/Instagram';
 
 const App = () => {
-  const [notionData, setNotionData] = useState(null);
-
-  useEffect(() => {
-    const fetchNotionData = async () => {
-      const data = await fetch('/api/fetchNotion');
-      const allNotionData = await data.json();
-      console.log("notion data in app", allNotionData);
-      setNotionData(allNotionData);
-    }
-    const timer = setTimeout(() => {
-      fetchNotionData();
-    }, 1);
-
-    return () => clearTimeout(timer);
-  },[])
-
-  if (!notionData){
-    return <div className='App bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-screen'></div>
-  }
-
-
   return (
-    <div className="App bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-screen">
-      <CardContainer notionData={notionData}/>
+    <div className='App bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-screen flex justify-center items-center flex-col'>
+      <p className='flex text-3xl'>charlespierreart.com</p>
+      <ul className='flex row-auto'>
+        <li>
+          <a href='https://www.facebook.com/profile.php?id=100088490717264'>
+            <Facebook />
+          </a>
+        </li>
+        <li>
+          <a href='https://www.instagram.com/charlespierretheron/'>
+            <Instagram />
+          </a>
+        </li>
+      </ul>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
