@@ -2,7 +2,7 @@ import React from 'react';
 
 const Instagram = () => {
   return (
-    <div>
+    <div className='m-3'>
       <svg
         xmlns='http://www.w3.org/2000/svg'
         width='35'

@@ -2,7 +2,7 @@ import React from 'react';
 
 function Facebook() {
   return (
-    <div className='cursor-pointer'>
+    <div className='m-3'>
       <svg
         xmlns='http://www.w3.org/2000/svg'
         width='35'
