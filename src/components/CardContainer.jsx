@@ -27,7 +27,7 @@ const CardContainer = ({ notionData }) => {
                 <p className='text-center' key={index}>{contentResult.plain_text}</p>
               )
             })}
-            <button className='bg-white mr-20 ml-20 mt-5 p-2 rounded text-center hover:bg-black hover:text-white' key={index}>
+            <button className='bg-white p-2 mt-5 rounded text-center hover:bg-black hover:text-white' key={index}>
               {results.properties.Btn_txt.rich_text.map((btnTxtResult, index) => {
                 return (
                   <a key={index} href={results.properties.Link.url}>
