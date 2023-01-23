@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Wrapper from './components/Wrapper';
 import CardContainer from './components/CardContainer';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
@@ -27,9 +28,11 @@ const App = () => {
 
   return (
     <div className="App bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-screen">
+      <Wrapper>
       <NavBar />
       <CardContainer notionData={notionData}/>
       <Footer />
+      </Wrapper>
     </div>
   )
 }
