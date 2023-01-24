@@ -3,10 +3,10 @@ import React from 'react';
 const CardContainer = ({ notionData }) => {
   const results = notionData.results;
   return (
-    <div className='grid grid-cols-1 md:grid-cols-4'>
+    <div className='grid grid-cols-1 md:grid-cols-3'>
       {results.map((results, index) => {
         return (
-          <div key={index} className='flex flex-col p-4 m-4 rounded-lg bg-slate-200 shadow-xl transition-all duration-300 hover:shadow-none hover:scale-95'>
+          <div key={index} className='flex flex-col p-4 m-4 rounded-lg bg-slate-200 shadow-xl transition-all duration-300 hover:shadow-none hover:scale-95 hover:opacity-100 opacity-80 cursor-pointer'>
             {results.properties.Image.files.map((imageResult, index) => {
               return (
                 <img key={index} src={imageResult.external.url} />
