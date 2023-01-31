@@ -1,9 +1,34 @@
 import React, { useState } from 'react';
-import Modal from './Modal';
+import Modal from 'react-modal';
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+  },
+};
 
 const CardContainer = ({ notionData }) => {
   const results = notionData.results;
-  const [isOpen, setIsOpen] = useState(false);
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = '#f00';
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   return (
     <div className='grid grid-cols-1 md:grid-cols-3'>
       {results.map((results, index) => {
@@ -14,13 +39,18 @@ const CardContainer = ({ notionData }) => {
           >
             {results.properties.Image.files.map((imageResult, index) => {
               return (
-                <div onClick={() => setIsOpen(true)}>
-                  {isOpen && (
-                    <Modal setIsOpen={setIsOpen}>
-                      <img key={index} src={imageResult.external.url} />
-                    </Modal>
-                  )}
-                </div>
+                <Modal
+                  onClick={openModal}
+                  isOpen={modalIsOpen}
+                  onAfterOpen={afterOpenModal}
+                  onRequestClose={closeModal}
+                  style={customStyles}
+                  contentLabel='Example Modal'
+                >
+                  <div>
+                    <img key={index} src={imageResult.external.url} />
+                  </div>
+                </Modal>
               );
             })}
             {results.properties.Name.title.map((titleResult, index) => {
