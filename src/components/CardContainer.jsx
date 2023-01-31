@@ -14,43 +14,45 @@ const customStyles = {
 
 const CardContainer = ({ notionData }) => {
   const results = notionData.results;
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal() {
     setIsOpen(true);
   }
 
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    subtitle.style.color = '#f00';
-  }
+  function afterOpenModal() {}
 
   function closeModal() {
     setIsOpen(false);
+    console.log('close');
   }
 
   return (
-    <div className='grid grid-cols-1 md:grid-cols-3'>
+    <div className='grid grid-cols-1 md:grid-cols-3 cursor-pointer'>
       {results.map((results, index) => {
         return (
           <div
             key={index}
             className='flex flex-col p-4 m-4 rounded-lg bg-slate-200 shadow-xl transition-all duration-300 hover:shadow-none hover:scale-95 hover:opacity-100 opacity-80 cursor-pointer'
+            onClick={openModal}
           >
             {results.properties.Image.files.map((imageResult, index) => {
               return (
-                <Modal
-                  onClick={openModal}
-                  isOpen={modalIsOpen}
-                  onAfterOpen={afterOpenModal}
-                  onRequestClose={closeModal}
-                  style={customStyles}
-                  contentLabel='Example Modal'
-                >
-                  <div>
-                    <img key={index} src={imageResult.external.url} />
-                  </div>
-                </Modal>
+                <div key={index}>
+                  <img
+                    src={imageResult.external.url}
+                    className='cursor-pointer'
+                  />
+                  <Modal
+                    isOpen={modalIsOpen}
+                    onAfterOpen={afterOpenModal}
+                    onRequestClose={closeModal}
+                    style={customStyles}
+                    contentLabel='Example Modal'
+                  >
+                    <img src={imageResult.external.url} />
+                  </Modal>
+                </div>
               );
             })}
             {results.properties.Name.title.map((titleResult, index) => {
