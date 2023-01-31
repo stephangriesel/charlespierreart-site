@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import Modal from 'react-modal';
+
 import Wrapper from './components/Wrapper';
 import CardContainer from './components/CardContainer';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
+
+Modal.setAppElement('#root');
 
 const App = () => {
   const [notionData, setNotionData] = useState(null);
