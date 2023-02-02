@@ -18,9 +18,9 @@ const Close = () => {
           y2='160'
           fill='none'
           stroke='#000000'
-          stroke-linecap='round'
-          stroke-linejoin='round'
-          stroke-width='16'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+          strokeWidth='16'
         ></line>
         <line
           x1='160'
@@ -29,9 +29,9 @@ const Close = () => {
           y2='96'
           fill='none'
           stroke='#000000'
-          stroke-linecap='round'
-          stroke-linejoin='round'
-          stroke-width='16'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+          strokeWidth='16'
         ></line>
         <rect
           x='40'
@@ -41,9 +41,9 @@ const Close = () => {
           rx='8'
           fill='none'
           stroke='#000000'
-          stroke-linecap='round'
-          stroke-linejoin='round'
-          stroke-width='16'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+          strokeWidth='16'
         ></rect>
       </svg>
     </div>
