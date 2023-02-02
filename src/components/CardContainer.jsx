@@ -1,31 +1,9 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-  },
-};
-
 const CardContainer = ({ notionData }) => {
   const results = notionData.results;
-  const [modalIsOpen, setIsOpen] = useState(false);
-
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function afterOpenModal() {}
-
-  function closeModal() {
-    setIsOpen(false);
-    console.log('close');
-  }
+  const [modalShown, toggleModal] = useState(false);
 
   return (
     <div className='grid grid-cols-1 md:grid-cols-3 cursor-pointer'>
@@ -34,23 +12,23 @@ const CardContainer = ({ notionData }) => {
           <div
             key={index}
             className='flex flex-col p-4 m-4 rounded-lg bg-slate-200 shadow-xl transition-all duration-300 hover:shadow-none hover:scale-95 hover:opacity-100 opacity-80 cursor-pointer'
-            onClick={openModal}
           >
             {results.properties.Image.files.map((imageResult, index) => {
               return (
                 <div key={index}>
+                  <p>modalShown: {modalShown.toString()}</p>
                   <img
                     src={imageResult.external.url}
                     className='cursor-pointer'
+                    onClick={() => {
+                      toggleModal(!modalShown)
+                    }}
                   />
                   <Modal
-                    isOpen={modalIsOpen}
-                    onAfterOpen={afterOpenModal}
-                    onRequestClose={closeModal}
-                    style={customStyles}
-                    contentLabel='Example Modal'
+                    shown={modalShown}
                   >
                     <img src={imageResult.external.url} />
+                    <div close={() => { toggleModal(false) }}>X</div>
                   </Modal>
                 </div>
               );
