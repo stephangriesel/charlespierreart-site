@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
-import Modal from 'react-modal';
+
+const Modal = ({ children, shown, close }) => {
+  return shown ? (
+    <div className='bg-black modal-backdrop' onClick={() => close()}>
+      <div className='flex justify-center modal-content' onClick={e => {
+        e.stopPropagation();
+      }}>
+        {children}
+      </div>
+    </div>
+  ) : null;
+};
 
 const CardContainer = ({ notionData }) => {
   const results = notionData.results;
@@ -11,12 +22,11 @@ const CardContainer = ({ notionData }) => {
         return (
           <div
             key={index}
-            className='flex flex-col p-4 m-4 rounded-lg bg-slate-200 shadow-xl transition-all duration-300 hover:shadow-none hover:scale-95 hover:opacity-100 opacity-80 cursor-pointer'
+            className='flex flex-col p-4 m-4 rounded-lg bg-slate-200 shadow-xl transition-all duration-300 opacity-80 cursor-pointer'
           >
             {results.properties.Image.files.map((imageResult, index) => {
               return (
                 <div key={index}>
-                  <p>modalShown: {modalShown.toString()}</p>
                   <img
                     src={imageResult.external.url}
                     className='cursor-pointer'
@@ -26,9 +36,9 @@ const CardContainer = ({ notionData }) => {
                   />
                   <Modal
                     shown={modalShown}
+                    close={() => { toggleModal(false) }}
                   >
                     <img src={imageResult.external.url} />
-                    <div close={() => { toggleModal(false) }}>X</div>
                   </Modal>
                 </div>
               );
@@ -78,5 +88,8 @@ const CardContainer = ({ notionData }) => {
     </div>
   );
 };
+
+
+
 
 export default CardContainer;
