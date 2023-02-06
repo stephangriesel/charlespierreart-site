@@ -5,6 +5,7 @@ import Wrapper from './components/Wrapper';
 import CardContainer from './components/CardContainer';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
+import Loading from './icons/Loading';
 
 Modal.setAppElement('#root');
 
@@ -27,14 +28,14 @@ const App = () => {
 
   if (!notionData) {
     return (
-      <div className='App bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-screen'>
-        No data
+      <div className='App flex justify-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-screen'>
+        <Loading />
       </div>
     );
   }
 
   return (
-    <div className='App bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-screen'>
+    <div className='App bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-full'>
       <Wrapper>
         <NavBar />
         <CardContainer notionData={notionData} />
