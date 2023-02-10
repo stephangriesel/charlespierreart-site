@@ -5,6 +5,21 @@ const CardContainer = ({ notionData }) => {
   const results = notionData.results;
   const [modalShown, toggleModal] = useState(false);
 
+  // console.log({ results })
+
+  const propertyNames = Object.values(results);
+  console.log("property names", propertyNames);
+
+  const resultsFiltered = propertyNames.map((arrayResult) => {
+    console.log("array result", arrayResult);
+    arrayResult.properties.Category.multi_select.map((categoryResult) => {
+      // console.log("category result", categoryResult);
+      // categoryResult.filter(name => {
+      //   console.log(name);
+      // })
+    })
+  })
+
   return (
     <div className='grid grid-cols-1 md:grid-cols-3 cursor-pointer'>
       {results.map((results, index) => {
