@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import Modal from './Modal';
+import React, { useState } from "react";
+import Modal from "./Modal";
 
 const CardContainer = ({ notionData }) => {
   const results = notionData.results;
@@ -9,38 +9,43 @@ const CardContainer = ({ notionData }) => {
 
   const propertyNames = Object.values(results);
   console.log("property names", propertyNames);
+  propertyNames.map(i => {
+    console.log("i", i);
+  });
 
-  const resultsFiltered = propertyNames.map((arrayResult) => {
-    console.log("array result", arrayResult);
-    arrayResult.properties.Category.multi_select.map((categoryResult) => {
-      // console.log("category result", categoryResult);
-      // categoryResult.filter(name => {
-      //   console.log(name);
-      // })
-    })
-  })
+  // const resultsFiltered = propertyNames.map((arrayResult) => {
+  //   console.log("array result", arrayResult);
+  //   arrayResult.properties.Category.multi_select.map((categoryResult) => {
+  // console.log("category result", categoryResult);
+  // categoryResult.filter(name => {
+  //   console.log(name);
+  // })
+  //   })
+  // })
 
   return (
-    <div className='grid grid-cols-1 md:grid-cols-3 cursor-pointer'>
+    <div className="grid grid-cols-1 md:grid-cols-3 cursor-pointer">
       {results.map((results, index) => {
         return (
           <div
             key={index}
-            className='flex flex-col p-4 m-4 rounded-lg bg-slate-200 shadow-xl transition-all duration-300 opacity-80 cursor-pointer'
+            className="flex flex-col p-4 m-4 rounded-lg bg-slate-200 shadow-xl transition-all duration-300 opacity-80 cursor-pointer"
           >
             {results.properties.Image.files.map((imageResult, index) => {
               return (
                 <div key={index}>
                   <img
                     src={imageResult.external.url}
-                    className='cursor-pointer'
+                    className="cursor-pointer"
                     onClick={() => {
-                      toggleModal(!modalShown)
+                      toggleModal(!modalShown);
                     }}
                   />
                   <Modal
                     shown={modalShown}
-                    close={() => { toggleModal(false) }}
+                    close={() => {
+                      toggleModal(false);
+                    }}
                   >
                     <img src={imageResult.external.url} />
                   </Modal>
@@ -49,7 +54,7 @@ const CardContainer = ({ notionData }) => {
             })}
             {results.properties.Name.title.map((titleResult, index) => {
               return (
-                <h1 className='text-center font-bold' key={index}>
+                <h1 className="text-center font-bold" key={index}>
                   {titleResult.plain_text}
                 </h1>
               );
@@ -57,7 +62,7 @@ const CardContainer = ({ notionData }) => {
             {results.properties.Content.rich_text.map(
               (contentResult, index) => {
                 return (
-                  <p className='text-center' key={index}>
+                  <p className="text-center" key={index}>
                     {contentResult.plain_text}
                   </p>
                 );
@@ -66,14 +71,14 @@ const CardContainer = ({ notionData }) => {
             {results.properties.Content.rich_text.map(
               (contentResult, index) => {
                 return (
-                  <p className='text-center' key={index}>
+                  <p className="text-center" key={index}>
                     {contentResult.plain_text}
                   </p>
                 );
               }
             )}
             <button
-              className='bg-white p-2 mt-5 rounded text-center hover:bg-black hover:text-white'
+              className="bg-white p-2 mt-5 rounded text-center hover:bg-black hover:text-white"
               key={index}
             >
               {results.properties.Btn_txt.rich_text.map(
@@ -92,8 +97,5 @@ const CardContainer = ({ notionData }) => {
     </div>
   );
 };
-
-
-
 
 export default CardContainer;
