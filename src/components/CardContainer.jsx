@@ -7,21 +7,8 @@ const CardContainer = ({ notionData }) => {
 
   // console.log({ results })
 
-  const propertyNames = Object.values(results);
-  console.log("property names", propertyNames);
-  propertyNames.map(i => {
-    console.log("i", i);
-  });
-
-  // const resultsFiltered = propertyNames.map((arrayResult) => {
-  //   console.log("array result", arrayResult);
-  //   arrayResult.properties.Category.multi_select.map((categoryResult) => {
-  // console.log("category result", categoryResult);
-  // categoryResult.filter(name => {
-  //   console.log(name);
-  // })
-  //   })
-  // })
+  const resultsArray = Object.values(results);
+  console.log({ resultsArray })
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 cursor-pointer">
