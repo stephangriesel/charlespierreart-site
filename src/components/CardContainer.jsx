@@ -6,10 +6,16 @@ const CardContainer = ({ notionData }) => {
   const [modalShown, toggleModal] = useState(false);
 
   const resultsArray = Object.values(results);
-  console.log({ resultsArray })
+  console.log({ resultsArray });
 
-  const result = resultsArray.find(item => item.properties.Category.multi_select.find(select => select.name === "commissions"));
-  console.log(result)
+  const result = resultsArray.find(item =>
+    item.properties.Category.multi_select.find(
+      item => item.name === "commissions"
+    )
+  );
+
+  const categoryResult = result.properties.Category.multi_select;
+  console.log({ categoryResult });
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 cursor-pointer">
