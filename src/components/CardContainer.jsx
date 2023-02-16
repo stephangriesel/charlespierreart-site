@@ -5,17 +5,15 @@ const CardContainer = ({ notionData }) => {
   const results = notionData.results;
   const [modalShown, toggleModal] = useState(false);
 
-  const resultsArray = Object.values(results);
-  console.log({ resultsArray });
+  console.log("original results", results);
 
-  const result = resultsArray.find(item =>
+  const containsCommissions = results.find(item =>
     item.properties.Category.multi_select.find(
       item => item.name === "commissions"
     )
   );
 
-  const categoryResult = result.properties.Category.multi_select;
-  console.log({ categoryResult });
+  console.log("contains commissions category", containsCommissions);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 cursor-pointer">
