@@ -4,16 +4,37 @@ import Modal from "./Modal";
 const CardContainer = ({ notionData }) => {
   const results = notionData.results;
   const [modalShown, toggleModal] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState([]);
 
   console.log("original results", results);
 
-  const containsCommissions = results.find(item =>
-    item.properties.Category.multi_select.find(
-      item => item.name === "commissions"
-    )
-  );
+  const handleFilterClick = (filterName) => {
+    if (selectedFilters.includes(filterName)) {
+      setSelectedFilters(selectedFilters.filter((item) => item !== filterName));
+    } else {
+      setSelectedFilters([...selectedFilters, filterName]);
+    }
+  };
 
-  console.log("contains commissions category", containsCommissions);
+  console.log({ handleFilterClick })
+
+  const filters = results.reduce((acc, obj) => {
+    obj.properties.Category.multi_select.forEach((filter) => {
+      const filterIndex = acc.findIndex((item) => item.name === filter.name);
+      if (filterIndex !== -1) {
+        acc[filterIndex].ids.push(obj.id);
+      } else {
+        acc.push({
+          name: filter.name,
+          color: filter.color,
+          ids: [obj.id]
+        });
+      }
+    });
+    return acc;
+  }, []);
+
+  console.log({ filters })
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 cursor-pointer">
