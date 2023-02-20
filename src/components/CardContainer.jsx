@@ -2,40 +2,53 @@ import React, { useState } from "react";
 import Modal from "./Modal";
 
 const CardContainer = ({ notionData }) => {
-  const results = notionData.results;
-  const [modalShown, toggleModal] = useState(false);
+  const [modalShown, setModalShown] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState([]);
 
-  console.log("original results", results);
-  console.log("selected filter", selectedFilters)
+  const results = notionData.results;
+  const filters = getFilters(results);
 
-  const handleFilterClick = (filterName) => {
-    if (selectedFilters.includes(filterName)) {
-      setSelectedFilters(selectedFilters.filter((item) => item !== filterName));
-    } else {
-      setSelectedFilters([...selectedFilters, filterName]);
-    }
-  };
+  function getFilters(results) {
+    const filters = {};
 
-  console.log("handle filtter click", handleFilterClick)
+    results.forEach((result) => {
+      const categories = result.properties.Category.multi_select;
 
-  const filters = results.reduce((acc, obj) => {
-    obj.properties.Category.multi_select.forEach((filter) => {
-      const filterIndex = acc.findIndex((item) => item.name === filter.name);
-      if (filterIndex !== -1) {
-        acc[filterIndex].ids.push(obj.id);
-      } else {
-        acc.push({
-          name: filter.name,
-          color: filter.color,
-          ids: [obj.id]
-        });
-      }
+      categories.forEach((category) => {
+        if (!filters[category.id]) {
+          filters[category.id] = {
+            name: category.name,
+            color: category.color,
+            results: [result],
+          };
+        } else {
+          filters[category.id].results.push(result);
+        }
+      });
     });
-    return acc;
-  }, []);
 
-  console.log("filters", filters)
+    return Object.values(filters);
+  }
+
+  function handleFilterClick(filter) {
+    if (selectedFilters.includes(filter)) {
+      setSelectedFilters(selectedFilters.filter((f) => f !== filter));
+    } else {
+      setSelectedFilters([...selectedFilters, filter]);
+    }
+  }
+
+  function handleModalToggle() {
+    setModalShown(!modalShown);
+  }
+
+  function handleModalClose() {
+    setModalShown(false);
+  }
+
+  function handleResetClick() {
+    setSelectedFilters([]);
+  }
 
   return (
     <>
@@ -43,91 +56,63 @@ const CardContainer = ({ notionData }) => {
         {filters.map((filter) => (
           <button
             key={filter.name}
-            onClick={() => handleFilterClick(filter.name)}
+            onClick={() => handleFilterClick(filter)}
             style={{
-              backgroundColor: selectedFilters.includes(filter.name)
+              backgroundColor: selectedFilters.includes(filter)
                 ? filter.color
-                : 'gray',
-              color: selectedFilters.includes(filter.name)
-                ? 'white'
-                : 'black',
-              marginRight: '10px'
+                : "gray",
+              color: selectedFilters.includes(filter) ? "white" : "black",
+              marginRight: "10px",
             }}
           >
             {filter.name}
           </button>
         ))}
+        <button onClick={handleResetClick}>Reset</button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 cursor-pointer">
-        {results.map((results, index) => {
-          return (
+        {results
+          .filter((result) =>
+            selectedFilters.length > 0
+              ? result.properties.Category.multi_select.some((category) =>
+                selectedFilters.some((filter) => filter.name === category.name)
+              )
+              : true
+          )
+          .map((result, index) => (
             <div
-              key={index}
+              key={result.id}
               className="flex flex-col p-4 m-4 rounded-lg bg-slate-200 shadow-xl transition-all duration-300 opacity-80 cursor-pointer"
             >
-              {results.properties.Image.files.map((imageResult, index) => {
-                return (
-                  <div key={index}>
-                    <img
-                      src={imageResult.external.url}
-                      className="cursor-pointer"
-                      onClick={() => {
-                        toggleModal(!modalShown);
-                      }}
-                    />
-                    <Modal
-                      shown={modalShown}
-                      close={() => {
-                        toggleModal(false);
-                      }}
-                    >
-                      <img src={imageResult.external.url} />
-                    </Modal>
-                  </div>
-                );
-              })}
-              {results.properties.Name.title.map((titleResult, index) => {
-                return (
-                  <h1 className="text-center font-bold" key={index}>
-                    {titleResult.plain_text}
-                  </h1>
-                );
-              })}
-              {results.properties.Content.rich_text.map(
-                (contentResult, index) => {
-                  return (
-                    <p className="text-center" key={index}>
-                      {contentResult.plain_text}
-                    </p>
-                  );
-                }
-              )}
-              {results.properties.Content.rich_text.map(
-                (contentResult, index) => {
-                  return (
-                    <p className="text-center" key={index}>
-                      {contentResult.plain_text}
-                    </p>
-                  );
-                }
-              )}
-              <button
-                className="bg-white p-2 mt-5 rounded text-center hover:bg-black hover:text-white"
-                key={index}
-              >
-                {results.properties.Btn_txt.rich_text.map(
-                  (btnTxtResult, index) => {
-                    return (
-                      <a key={index} href={results.properties.Link.url}>
-                        {btnTxtResult.plain_text}
-                      </a>
-                    );
-                  }
-                )}
-              </button>
+              {result.properties.Image.files.map((imageResult, index) => (
+                <div key={index}>
+                  <img
+                    src={imageResult.external.url}
+                    className="cursor-pointer"
+                    onClick={handleModalToggle}
+                  />
+                  <Modal shown={modalShown} close={handleModalClose}>
+                    <img src={imageResult.external.url} />
+                  </Modal>
+                </div>
+              ))}
+              {result.properties.Name.title.map((titleResult, index) => (
+                <h1 className="text-center font-bold" key={index}>
+                  {titleResult.plain_text}
+                </h1>
+              ))}
+              {result.properties.Content.rich_text.map((contentResult, index) => (
+                <p className="text-center" key={index}>
+                  {contentResult.plain_text}
+                </p>
+              ))}
+              {result.properties.Btn_txt.rich_text.map((btnTxtResult, index) => (
+                <button className="bg-white p-2 mt-5 rounded text-center hover:bg-black hover:text-white" key={index}>
+                  <a href={result.properties.Link.url}>{btnTxtResult.plain_text}</a>
+                </button>
+              ))}
             </div>
-          );
-        })}
+          ))}
       </div>
     </>
   );
