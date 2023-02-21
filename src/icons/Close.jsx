@@ -5,8 +5,8 @@ const Close = () => {
     <div>
       <svg
         xmlns='http://www.w3.org/2000/svg'
-        width='192'
-        height='192'
+        width='25'
+        height='25'
         fill='#000000'
         viewBox='0 0 256 256'
       >
