@@ -78,7 +78,7 @@ const CardContainer = ({ notionData }) => {
           .map((result, index) => (
             <div
               key={result.id}
-              className="flex flex-col p-4 m-4 rounded-lg bg-slate-200 shadow-xl transition-all duration-300 opacity-80 cursor-pointer"
+              className="flex flex-col p-4 m-4 rounded-lg bg-slate-200 shadow-xl transition-all duration-300 cursor-pointer"
             >
               {result.properties.Image.files.map((imageResult, index) => (
                 <div key={index}>
