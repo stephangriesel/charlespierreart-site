@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 
+import Close from "../icons/Close";
+
 const CardContainer = ({ notionData }) => {
   const [modalShown, setModalShown] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState([]);
@@ -52,23 +54,17 @@ const CardContainer = ({ notionData }) => {
 
   return (
     <>
-      <div>
+      <div className="flex justify-center m-2">
         {filters.map((filter) => (
           <button
+            className="m-2 capitalize rounded-full bg-white p-2"
             key={filter.name}
             onClick={() => handleFilterClick(filter)}
-            style={{
-              backgroundColor: selectedFilters.includes(filter)
-                ? filter.color
-                : "gray",
-              color: selectedFilters.includes(filter) ? "white" : "black",
-              marginRight: "10px",
-            }}
           >
             {filter.name}
           </button>
         ))}
-        <button onClick={handleResetClick}>Reset</button>
+        <button className="m-2 bg-white rounded-full p-2" onClick={handleResetClick}><Close /></button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 cursor-pointer">
         {results
