@@ -6,6 +6,9 @@ import Close from "../icons/Close";
 const CardContainer = ({ notionData }) => {
   const [modalShown, setModalShown] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState([]);
+  const [selectedModal, setSelectedModal] = useState(null);
+  const [selectedImageUrl, setSelectedImageUrl] = useState(null);
+
 
   const results = notionData.results;
   const filters = getFilters(results);
@@ -40,11 +43,15 @@ const CardContainer = ({ notionData }) => {
     }
   }
 
-  function handleModalToggle() {
-    setModalShown(!modalShown);
+  function handleModalToggle(imageUrl) {
+    console.log(imageUrl, selectedImageUrl)
+    setSelectedModal(imageUrl ? 0 : null);
+    setSelectedImageUrl(imageUrl);
+    setModalShown(!imageUrl);
   }
 
   function handleModalClose() {
+    console.log("close function firing")
     setModalShown(false);
   }
 
@@ -85,11 +92,9 @@ const CardContainer = ({ notionData }) => {
                   <img
                     src={imageResult.external.url}
                     className="cursor-pointer"
-                    onClick={handleModalToggle}
+                    onClick={() => handleModalToggle(imageResult.external.url)}
                   />
-                  <Modal shown={modalShown} close={handleModalClose}>
-                    <img src={imageResult.external.url} />
-                  </Modal>
+                  <Modal shown={selectedModal === index} close={handleModalClose} selectedImageUrl={selectedImageUrl} />
                 </div>
               ))}
               {result.properties.Name.title.map((titleResult, index) => (
