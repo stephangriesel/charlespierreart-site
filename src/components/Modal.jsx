@@ -1,13 +1,19 @@
-import React from 'react'
+import React from 'react';
 
-const Modal = ({ children, shown, close }) => {
-    return shown ? (
-        <div className='fixed top-0 left-0 bottom-0 right-0 flex justify-center items-center z-10 bg-black/40' onClick={() => close()}>
-            <div className=' w-1/3 min-h-[120px] bg-white p-6 flex justify-center' onClick={() => close()}>
-                {children}
+const Modal = ({ shown, close, selectedImageUrl }) => {
+    console.log('shown:', shown);
+    if (!shown) {
+        return null;
+    }
+
+    return (
+        <div className="fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={() => close()}>
+            <div className="w-1/3 min-h-[120px] bg-white rounded-lg p-6 max-w-xl mx-auto">
+                <img src={selectedImageUrl} alt="" className="mb-4" onClick={() => close()} />
             </div>
         </div>
-    ) : null;
+    );
 };
 
-export default Modal
+
+export default Modal;
