@@ -51,7 +51,7 @@ const CardContainer = ({ notionData }) => {
   }
 
   function handleModalClose() {
-    console.log("close function firing")
+    setSelectedModal(null);
     setModalShown(false);
   }
 
