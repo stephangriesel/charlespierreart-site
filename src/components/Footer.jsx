@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <div className="flex justify-center flex-row align-middle bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">Footer</div>
+    <div className="flex justify-center flex-row align-middle bg-gradient-to-r from-slate-200 via-blue-600 to-gray-400">Footer</div>
   )
 }
 

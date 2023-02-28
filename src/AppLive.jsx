@@ -28,14 +28,14 @@ const App = () => {
 
   if (!notionData) {
     return (
-      <div className='App bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-screen flex justify-center items-center flex-col'>
+      <div className='App bg-gradient-to-r from-slate-200 via-blue-600 to-gray-400 h-screen flex justify-center items-center flex-col'>
         <Loading />
       </div>
     );
   }
 
   return (
-    <div className='App bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-full md:h-screen'>
+    <div className='App bg-gradient-to-r from-slate-200 via-blue-600 to-gray-400 h-full md:h-screen'>
       <Wrapper>
         <NavBar />
         <CardContainer notionData={notionData} />
